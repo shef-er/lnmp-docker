@@ -33,14 +33,17 @@ RUN set -ex \
 RUN wget https://getcomposer.org/installer -O - -q \
     | php -- --install-dir=/bin --filename=composer --quiet
 
+RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini \
+    && echo "xdebug.remote_port=\"9000\"" >> /usr/local/etc/php/php.ini
+
 RUN apk --no-cache add shadow \
     && usermod -u ${USER_ID} www-data \
     && groupmod -g ${GROUP_ID} www-data
 
-WORKDIR /var/www
+WORKDIR /web
 
 USER "${USER_ID}:${GROUP_ID}"
 
-EXPOSE 9000
-
 CMD ["php-fpm"]
+
+EXPOSE 9000
