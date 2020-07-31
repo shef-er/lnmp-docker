@@ -39,6 +39,7 @@ services:
       - 9000:9000
 
   nginx:
+    container_name: "lnmp-nginx"
     image: "nginx:1.17-alpine"
     depends_on:
       - php
