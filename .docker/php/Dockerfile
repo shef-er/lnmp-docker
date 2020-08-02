@@ -32,8 +32,7 @@ RUN set -ex \
 RUN wget https://getcomposer.org/installer -O - -q \
     | php -- --install-dir=/bin --filename=composer --quiet
 
-RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini \
-    && echo "xdebug.remote_port=\"9000\"" >> /usr/local/etc/php/php.ini
+ADD php.ini  /usr/local/etc/php/php.ini
 
 
 ARG DC_USER_ID
