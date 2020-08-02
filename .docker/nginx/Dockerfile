@@ -3,7 +3,7 @@ FROM nginx:1.17-alpine
 MAINTAINER Ernest Shefer <shef-er@ya.ru>
 
 ADD nginx.conf  /etc/nginx/nginx.conf
-ADD conf.d/     /etc/nginx/conf.d/
+#ADD conf.d/     /etc/nginx/conf.d/
 ADD snippets/   /etc/nginx/snippets/
 
 #ARG USER_ID

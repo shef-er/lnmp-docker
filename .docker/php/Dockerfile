@@ -36,14 +36,14 @@ RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini \
     && echo "xdebug.remote_port=\"9000\"" >> /usr/local/etc/php/php.ini
 
 
-ARG USER_ID
-ARG GROUP_ID
+ARG DC_USER_ID
+ARG DC_GROUP_ID
 
 RUN apk --no-cache add shadow \
-    && usermod -u ${USER_ID} www-data \
-    && groupmod -g ${GROUP_ID} www-data
+    && usermod -u ${DC_USER_ID} www-data \
+    && groupmod -g ${DC_GROUP_ID} www-data
 
-USER "${USER_ID}:${GROUP_ID}"
+USER "${DC_USER_ID}:${DC_GROUP_ID}"
 
 
 WORKDIR /web

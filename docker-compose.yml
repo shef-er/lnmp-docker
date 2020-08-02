@@ -4,15 +4,23 @@ networks:
   frontend:
   backend:
 
+volumes:
+  mysql_data:
+
 services:
 
-  dbapp:
-    container_name: "lnmp-dbapp"
+  mysql:
+    container_name: "lnmp-mysql"
     image: mysql
     restart: unless-stopped
+    volumes:
+      - "mysql_data:/var/lib/mysql"
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD:  ${MYSQL_ROOT_PASSWORD:?Unspecified MYSQL_ROOT_PASSWORD variable}
+      MYSQL_USER:           ${MYSQL_USER:?Unspecified MYSQL_USER variable}
+      MYSQL_PASSWORD:       ${MYSQL_PASSWORD:?Unspecified MYSQL_PASSWORD variable}
+      MYSQL_DATABASE:       ${MYSQL_DATABASE:?Unspecified MYSQL_DATABASE variable}
     networks:
       - backend
     ports:
@@ -24,11 +32,11 @@ services:
       context: .docker/php
       network: host
       args:
-        USER_ID: ${USER_ID:-0}
-        GROUP_ID: ${GROUP_ID:-0}
+        DC_USER_ID: ${DC_USER_ID:-0}
+        DC_GROUP_ID: ${DC_GROUP_ID:-0}
     restart: unless-stopped
     depends_on:
-      - dbapp
+      - mysql
     volumes:
       - "./:/web/"
     environment:
@@ -43,15 +51,13 @@ services:
     build:
       context: .docker/nginx
       network: host
-      args:
-        USER_ID: ${USER_ID:-0}
-        GROUP_ID: ${GROUP_ID:-0}
     depends_on:
       - php
-      - dbapp
+      - mysql
     restart: unless-stopped
     volumes:
       - "./:/web/"
+      - ".docker/nginx/conf.d/:/etc/nginx/conf.d/"
     networks:
       - backend
       - frontend
