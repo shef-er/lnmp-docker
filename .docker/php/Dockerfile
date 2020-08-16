@@ -33,17 +33,17 @@ RUN set -ex \
 RUN wget https://getcomposer.org/installer -O - -q \
     | php -- --install-dir=/bin --filename=composer --quiet
 
-ADD php.ini  /usr/local/etc/php/php.ini
+ADD php.ini /usr/local/etc/php/php.ini
 
 
 ARG DC_USER_ID
 ARG DC_GROUP_ID
 
 RUN apk --no-cache add shadow \
-    && usermod -u ${DC_USER_ID} www-data \
-    && groupmod -g ${DC_GROUP_ID} www-data
+    && usermod -u $DC_USER_ID www-data \
+    && groupmod -g $DC_GROUP_ID www-data
 
-USER "${DC_USER_ID}:${DC_GROUP_ID}"
+USER "$DC_USER_ID:$DC_GROUP_ID"
 
 
 WORKDIR /web
