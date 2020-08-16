@@ -43,8 +43,6 @@ services:
       docker: "true"
     networks:
       - backend
-    ports:
-      - 9000:9000
 
   nginx:
     container_name: "lnmp-nginx"

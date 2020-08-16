@@ -27,7 +27,8 @@ RUN set -ex \
     && docker-php-ext-install json \
     && docker-php-ext-install xsl \
     && docker-php-ext-install intl \
-    && docker-php-ext-install zip
+    && docker-php-ext-install zip \
+    && docker-php-ext-install opcache
 
 RUN wget https://getcomposer.org/installer -O - -q \
     | php -- --install-dir=/bin --filename=composer --quiet
