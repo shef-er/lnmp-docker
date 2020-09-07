@@ -10,7 +10,7 @@ volumes:
 services:
 
   mysql:
-    container_name: "lnmp-mysql"
+    container_name: "lemp-mysql"
     image: mysql
     restart: unless-stopped
     volumes:
@@ -27,7 +27,7 @@ services:
       - 3306:3306
 
   php:
-    container_name: "lnmp-php"
+    container_name: "lemp-php"
     build:
       context: .docker/php
       network: host
@@ -45,7 +45,7 @@ services:
       - backend
 
   nginx:
-    container_name: "lnmp-nginx"
+    container_name: "lemp-nginx"
     build:
       context: .docker/nginx
       network: host
