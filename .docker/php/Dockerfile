@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.0.8-fpm-alpine3.13
 
 MAINTAINER Ernest Shefer <shef-er@ya.ru>
 
@@ -10,9 +10,9 @@ RUN pecl channel-update pecl.php.net
 RUN set -ex \
     && apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS imagemagick-dev libtool \
     && export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" \
-    && pecl install imagick-3.4.4 \
+    && pecl install imagick-3.5.0 \
     && docker-php-ext-enable imagick \
-    && pecl install xdebug-2.9.6 \
+    && pecl install xdebug-3.0.4 \
     && docker-php-ext-enable xdebug \
     && apk add --no-cache --virtual .imagick-runtime-deps imagemagick \
     && apk del .phpize-deps
@@ -24,7 +24,6 @@ RUN set -ex \
     && docker-php-ext-install gd \
     && docker-php-ext-install mbstring \
     && docker-php-ext-install mysqli \
-    && docker-php-ext-install json \
     && docker-php-ext-install xsl \
     && docker-php-ext-install intl \
     && docker-php-ext-install zip \
